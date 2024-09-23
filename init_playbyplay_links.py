@@ -1,7 +1,5 @@
 from selenium import webdriver
-import selenium 
 from selenium.webdriver.common.by import By
-import time
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
@@ -12,7 +10,6 @@ import random
 URL = "https://miacathletics.com/sports/baseball"
 
 def main():
-
     # create a new Service instance and specify path to Chromedriver executable
     service = ChromeService(executable_path=ChromeDriverManager().install())
 
@@ -41,15 +38,12 @@ def main():
     # disable shared memory usage
     options.add_argument('--disable-dev-shm-usage')
 
-
     # Set navigator.webdriver to undefined
     # create a driver instance
     driver = webdriver.Chrome(service=service, options=options)
 
     # Change the property value of the navigator for webdriver to undefined
     driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
-
-
 
     # Step 3: Rotate user agents 
     user_agents = [
@@ -69,7 +63,6 @@ def main():
     # pass in selected user agent as an argument
     options.add_argument(f'user-agent={user_agent}')
 
-
     # Step 4: Scrape using Stealth
     #enable stealth mode
     stealth(driver,
@@ -88,7 +81,6 @@ def main():
     while driver.execute_script("return document.readyState") != "complete":
         pass
 
-    s
     
     # Take screenshot
     # driver.save_screenshot("opensea.png")
