@@ -234,7 +234,7 @@
                     "LOB": 0
                 },
                 {
-                    "Position": NaN,
+                    "Position": -1,
                     "Player": "Totals",
                     "AB": 46,
                     "R": 12,
@@ -456,7 +456,7 @@
                     "LOB": 0
                 },
                 {
-                    "Position": NaN,
+                    "Position": -1,
                     "Player": "Totals",
                     "AB": 47,
                     "R": 26,
@@ -544,7 +544,7 @@
                 },
                 {
                     "Player": "Totals",
-                    "IP": NaN,
+                    "IP": -1.0,
                     "H": 22,
                     "R": 26,
                     "ER": 12,
@@ -558,7 +558,7 @@
                     "BF": 58,
                     "FO": 12,
                     "GO": 10,
-                    "NP": NaN
+                    "NP": -1
                 }
             ],
             "Team 2 Pitching": [
@@ -636,7 +636,7 @@
                 },
                 {
                     "Player": "Totals",
-                    "IP": NaN,
+                    "IP": -1.0,
                     "H": 17,
                     "R": 12,
                     "ER": 9,
@@ -650,7 +650,7 @@
                     "BF": 55,
                     "FO": 10,
                     "GO": 9,
-                    "NP": NaN
+                    "NP": -1
                 }
             ]
         }

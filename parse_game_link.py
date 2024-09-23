@@ -83,16 +83,16 @@ def get_batter_tables(box_tables):
     #tables 3 and 4, 1 indexed
     table1 = box_tables[2]
     table2 = box_tables[3]
-    df1 = pd.read_html(table1.prettify())[0]
-    df2 = pd.read_html(table2.prettify())[0]
+    df1 = pd.read_html(table1.prettify())[0].fillna(-1)
+    df2 = pd.read_html(table2.prettify())[0].fillna(-1)
     return {"Team 1 Batting": df1.to_dict("records"), "Team 2 Batting": df2.to_dict("records")}
 
 def get_pitcher_tables(box_tables):
     #tables 5 6, 1 indexed
     table1 = box_tables[4]
     table2 = box_tables[5]
-    df1 = pd.read_html(table1.prettify())[0]
-    df2 = pd.read_html(table2.prettify())[0]
+    df1 = pd.read_html(table1.prettify())[0].fillna(-1)
+    df2 = pd.read_html(table2.prettify())[0].fillna(-1)
     return {"Team 1 Pitching": df1.to_dict('records'), "Team 2 Pitching": df2.to_dict("records")}
 
 def write_json(_json):
