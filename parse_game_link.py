@@ -76,9 +76,6 @@ def get_header_details(header):
     location = dl.find('dt', text="Site").find_next_sibling('dd').text
     return {"Date":f"{date}", "Start":f"{start}", "Time":f"{Time}", "Site":f"{location}"}
 
-# def parse_header(header):
-#     return {"Game details": get_header_details(header), "Team totals": get_header_stats_totals(header)}
-
 def get_batter_tables(box_tables):
     #tables 3 and 4, 1 indexed
     table1 = box_tables[2]
@@ -97,16 +94,36 @@ def get_pitcher_tables(box_tables):
 
 def write_json(_json):
     with open("C:\\Users\\jhurt\\OneDrive\\Desktop\\MIACDIII_Tracker\\logs\\Game_stats.json", "a") as file:
-        file.write(json.dumps(_json, indent=4))
+        file.write(json.dumps(_json, indent=4) + '\n')
 
+#Function goes to the Box Score section of the given url and parses the given stats
+#Game Details
+#Game Totals
+#Batters
+#Pitchers
 def parse_and_store_box(URL):
     try: 
         print(f"Processing URL: {URL}")
         soup = get_page(URL)
         _json = get_all_box_stats_json(soup)
         write_json(_json)
+        write_URL_to_logs(URL, True)
     except:
         print(f"Failed to parse URL: {URL}")
+        write_URL_to_logs(URL, False)
+
+def write_URL_to_logs(URL, isUpdated):
+    with open("C:\\Users\\jhurt\\OneDrive\\Desktop\\MIACDIII_Tracker\\logs\\update_logs.json", "r+") as file:
+            try:
+                _json = json.load(file)
+                for game in _json:
+                    if game['URL'] == URL:
+                        _json['URL']["lastUpdated"] = datetime.now()
+                        _json['URL']["isUpdated"] = isUpdated
+            except: 
+                _json_element = {"URL": URL, "lastUpdated": str(datetime.now()), "isUpdated": isUpdated}
+                file.write(json.dumps(_json_element, indent=4) + '\n')
+                
 
 def get_all_box_stats_json(soup):
     header = get_box_score_header(soup)
@@ -124,6 +141,9 @@ def get_all_box_stats_json(soup):
         }
     }
     return _json_game
+
+# def parse_and_store_play(URL):
+
     
 
 def main():
