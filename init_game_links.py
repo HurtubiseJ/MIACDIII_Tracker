@@ -21,15 +21,50 @@ def get_page(URL):
 
 #TODO: Merge links list and pandas table, decide what to move to JSON/Store
 def save_team_table_links(teams, tables):
+    all_matches = []
     for i in range(len(teams)):
         team_name = teams[i].text.split()[0]
-        team_record = teams[i].text.split()[1]
+        team_record = teams[i].text.split()[1].strip("(").strip(",")
         table = tables[i]
         links = []
-        for a in table.find_all("a", href=True):
-            links.append(a['href'])
+        dates = []
+        opponents = []
+        results = []
+        for tr in table.find_all("tr"):
+            rows = tr.find_all("td")
+            if rows:
+                dates.append(rows[0].text)
+                opponents.append(rows[1].text.strip().strip("* ").strip("at "))
+                results.append(rows[2].text)
+                links.append("https://miacathletics.com/" + rows[2].find("a")["href"])
+        team_json = save_team_table_links_helper(team_name, team_record, links, dates, opponents, results)
+        all_matches.append(team_json)
+    full_json = {
+        "All Games": all_matches
+    }
+    with open("C:\\Users\\jhurt\\OneDrive\\Desktop\\MIACDIII_Tracker\\logs\\Game_links.json", "a") as file:
+        file.write(json.dumps(full_json, indent=4))
 
-
+def save_team_table_links_helper(name, record, links, dates, opponents, results):
+    matches_list = create_matches_json(links, dates, opponents, results)
+    _json = {
+        "Team":name,
+        "Record": record,
+        "Matches": matches_list
+    }
+    return _json
+    
+def create_matches_json(links, dates, opponents, results):
+    matches_list = []
+    for i in range(len(links)):
+        match = {
+            "Opponent": f"{opponents[i]}",
+            "Date": f"{dates[i]}", 
+            "Resuilt": f"{results[i]}", 
+            "URL": f"{links[i]}" 
+        }
+        matches_list.append(match)
+    return matches_list
 
 #Returns a list of teams names and list of tables, teams[i] and tables[i] correlate 
 def find_team_links_tables(soup):

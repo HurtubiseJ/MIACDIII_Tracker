@@ -81,7 +81,6 @@ def main():
     while driver.execute_script("return document.readyState") != "complete":
         pass
 
-    
     # Take screenshot
     # driver.save_screenshot("opensea.png")
     

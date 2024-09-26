@@ -1,0 +1,462 @@
+{
+    "Game Stats": {
+        "URL": "https://miacathletics.com/boxscore.aspx?id=7ltyipP022aUJKmSgYVs3wXi7up73ghniwD5ElWyd07J7BNseBaMQePf0fY%2f3yUPU2iqzJuGrvibprNxltHfhjzahKugRChgIwJOnQuU36aPr6UCGn53aYCKiFnmHaPs9JDhc3iAafJNN0wdhpG5rEfXVis2ofyXQVlRHTsQbyA%3d&path=baseball",
+        "Game Details": {
+            "Date": "2/25/2023",
+            "Start": "12 p.m.",
+            "Time": "",
+            "Site": "Topeka, Kans. (Parrish Family Field)"
+        },
+        "Game Totals": {
+            "Team totals": [
+                {
+                    "Team": "BU  Bethel Univ.",
+                    "R": 2,
+                    "H": 8,
+                    "E": 2
+                },
+                {
+                    "Team": "BVUBB  Buena Vista Univ.",
+                    "R": 3,
+                    "H": 9,
+                    "E": 1
+                }
+            ]
+        },
+        "Batters": {
+            "Team 1 Batting": [
+                {
+                    "Position": "cf",
+                    "Player": "cf  Matthew Carlsen",
+                    "AB": 5,
+                    "R": 0,
+                    "H": 2,
+                    "RBI": 0,
+                    "BB": 0,
+                    "SO": 0,
+                    "LOB": 0
+                },
+                {
+                    "Position": "dh",
+                    "Player": "dh  Tommy Friesen",
+                    "AB": 3,
+                    "R": 0,
+                    "H": 1,
+                    "RBI": 1,
+                    "BB": 1,
+                    "SO": 0,
+                    "LOB": 0
+                },
+                {
+                    "Position": "rf",
+                    "Player": "rf  Caden Christiansen",
+                    "AB": 1,
+                    "R": 0,
+                    "H": 0,
+                    "RBI": 0,
+                    "BB": 0,
+                    "SO": 1,
+                    "LOB": 0
+                },
+                {
+                    "Position": "c",
+                    "Player": "c  Noah Wenberg",
+                    "AB": 5,
+                    "R": 0,
+                    "H": 0,
+                    "RBI": 0,
+                    "BB": 0,
+                    "SO": 2,
+                    "LOB": 0
+                },
+                {
+                    "Position": "lf",
+                    "Player": "lf  Justin Winterfeldt",
+                    "AB": 3,
+                    "R": 0,
+                    "H": 1,
+                    "RBI": 0,
+                    "BB": 1,
+                    "SO": 2,
+                    "LOB": 1
+                },
+                {
+                    "Position": "rf/p",
+                    "Player": "rf/p  Ty Koehn",
+                    "AB": 4,
+                    "R": 0,
+                    "H": 0,
+                    "RBI": 0,
+                    "BB": 0,
+                    "SO": 1,
+                    "LOB": 5
+                },
+                {
+                    "Position": "1b",
+                    "Player": "1b  Keenan Hodgkin",
+                    "AB": 3,
+                    "R": 0,
+                    "H": 1,
+                    "RBI": 0,
+                    "BB": 0,
+                    "SO": 1,
+                    "LOB": 0
+                },
+                {
+                    "Position": "3b",
+                    "Player": "3b  Jordan Krupke",
+                    "AB": 3,
+                    "R": 0,
+                    "H": 1,
+                    "RBI": 0,
+                    "BB": 0,
+                    "SO": 1,
+                    "LOB": 1
+                },
+                {
+                    "Position": "ss",
+                    "Player": "ss  Nick Kulseth",
+                    "AB": 4,
+                    "R": 1,
+                    "H": 1,
+                    "RBI": 0,
+                    "BB": 0,
+                    "SO": 1,
+                    "LOB": 1
+                },
+                {
+                    "Position": "2b",
+                    "Player": "2b  Nolan Jurgenson",
+                    "AB": 3,
+                    "R": 1,
+                    "H": 1,
+                    "RBI": 0,
+                    "BB": 1,
+                    "SO": 2,
+                    "LOB": 2
+                },
+                {
+                    "Position": "p",
+                    "Player": "p  Marcus Krupke",
+                    "AB": 0,
+                    "R": 0,
+                    "H": 0,
+                    "RBI": 0,
+                    "BB": 0,
+                    "SO": 0,
+                    "LOB": 0
+                },
+                {
+                    "Position": -1,
+                    "Player": "Totals",
+                    "AB": 34,
+                    "R": 2,
+                    "H": 8,
+                    "RBI": 1,
+                    "BB": 3,
+                    "SO": 11,
+                    "LOB": 10
+                }
+            ],
+            "Team 2 Batting": [
+                {
+                    "Position": "2b",
+                    "Player": "2b  J.Mathewson",
+                    "AB": 4,
+                    "R": 0,
+                    "H": 1,
+                    "RBI": 0,
+                    "BB": 0,
+                    "SO": 1,
+                    "LOB": 0
+                },
+                {
+                    "Position": "c",
+                    "Player": "c  E.Taylor",
+                    "AB": 3,
+                    "R": 1,
+                    "H": 2,
+                    "RBI": 0,
+                    "BB": 1,
+                    "SO": 0,
+                    "LOB": 0
+                },
+                {
+                    "Position": "ss",
+                    "Player": "ss  Garcia",
+                    "AB": 4,
+                    "R": 1,
+                    "H": 1,
+                    "RBI": 2,
+                    "BB": 0,
+                    "SO": 0,
+                    "LOB": 0
+                },
+                {
+                    "Position": "rf/p",
+                    "Player": "rf/p  Harris",
+                    "AB": 4,
+                    "R": 0,
+                    "H": 0,
+                    "RBI": 0,
+                    "BB": 0,
+                    "SO": 0,
+                    "LOB": 3
+                },
+                {
+                    "Position": "dh/1b",
+                    "Player": "dh/1b  D.Taylor",
+                    "AB": 3,
+                    "R": 0,
+                    "H": 1,
+                    "RBI": 0,
+                    "BB": 1,
+                    "SO": 0,
+                    "LOB": 0
+                },
+                {
+                    "Position": "1b",
+                    "Player": "1b  Beekmann",
+                    "AB": 3,
+                    "R": 0,
+                    "H": 0,
+                    "RBI": 0,
+                    "BB": 0,
+                    "SO": 2,
+                    "LOB": 0
+                },
+                {
+                    "Position": "rf",
+                    "Player": "rf  Roderick",
+                    "AB": 1,
+                    "R": 0,
+                    "H": 0,
+                    "RBI": 0,
+                    "BB": 0,
+                    "SO": 0,
+                    "LOB": 2
+                },
+                {
+                    "Position": "lf",
+                    "Player": "lf  C. Mathewson",
+                    "AB": 3,
+                    "R": 0,
+                    "H": 0,
+                    "RBI": 0,
+                    "BB": 0,
+                    "SO": 2,
+                    "LOB": 0
+                },
+                {
+                    "Position": "lf",
+                    "Player": "lf  Oseka",
+                    "AB": 1,
+                    "R": 0,
+                    "H": 1,
+                    "RBI": 0,
+                    "BB": 0,
+                    "SO": 0,
+                    "LOB": 0
+                },
+                {
+                    "Position": "pr",
+                    "Player": "pr  Bock",
+                    "AB": 0,
+                    "R": 1,
+                    "H": 0,
+                    "RBI": 0,
+                    "BB": 0,
+                    "SO": 0,
+                    "LOB": 0
+                },
+                {
+                    "Position": "3b",
+                    "Player": "3b  Mueller",
+                    "AB": 4,
+                    "R": 0,
+                    "H": 2,
+                    "RBI": 0,
+                    "BB": 0,
+                    "SO": 0,
+                    "LOB": 0
+                },
+                {
+                    "Position": "cf",
+                    "Player": "cf  Corcoran",
+                    "AB": 3,
+                    "R": 0,
+                    "H": 1,
+                    "RBI": 0,
+                    "BB": 0,
+                    "SO": 2,
+                    "LOB": 2
+                },
+                {
+                    "Position": "p",
+                    "Player": "p  M. Smith",
+                    "AB": 0,
+                    "R": 0,
+                    "H": 0,
+                    "RBI": 0,
+                    "BB": 0,
+                    "SO": 0,
+                    "LOB": 0
+                },
+                {
+                    "Position": "p",
+                    "Player": "p  Polzien",
+                    "AB": 0,
+                    "R": 0,
+                    "H": 0,
+                    "RBI": 0,
+                    "BB": 0,
+                    "SO": 0,
+                    "LOB": 0
+                },
+                {
+                    "Position": -1,
+                    "Player": "Totals",
+                    "AB": 33,
+                    "R": 3,
+                    "H": 9,
+                    "RBI": 2,
+                    "BB": 2,
+                    "SO": 7,
+                    "LOB": 7
+                }
+            ]
+        },
+        "Pitchers": {
+            "Team 1 Pitching": [
+                {
+                    "Player": "Marcus Krupke",
+                    "IP": 6.2,
+                    "H": 6,
+                    "R": 2,
+                    "ER": 2,
+                    "BB": 1,
+                    "SO": 7,
+                    "WP": 0,
+                    "BK": 0,
+                    "HBP": 0,
+                    "IBB": 0,
+                    "AB": 27,
+                    "BF": 28,
+                    "FO": 10,
+                    "GO": 2,
+                    "NP": "--"
+                },
+                {
+                    "Player": "Ty Koehn (L, 0-1)",
+                    "IP": 1.1,
+                    "H": 3,
+                    "R": 1,
+                    "ER": 0,
+                    "BB": 1,
+                    "SO": 0,
+                    "WP": 0,
+                    "BK": 0,
+                    "HBP": 0,
+                    "IBB": 0,
+                    "AB": 6,
+                    "BF": 7,
+                    "FO": 0,
+                    "GO": 3,
+                    "NP": "--"
+                },
+                {
+                    "Player": "Totals",
+                    "IP": -1.0,
+                    "H": 9,
+                    "R": 3,
+                    "ER": 2,
+                    "BB": 2,
+                    "SO": 7,
+                    "WP": 0,
+                    "BK": 0,
+                    "HBP": 0,
+                    "IBB": 0,
+                    "AB": 33,
+                    "BF": 35,
+                    "FO": 10,
+                    "GO": 5,
+                    "NP": -1
+                }
+            ],
+            "Team 2 Pitching": [
+                {
+                    "Player": "M. Smith",
+                    "IP": 6.0,
+                    "H": 6,
+                    "R": 1,
+                    "ER": 1,
+                    "BB": 1,
+                    "SO": 7,
+                    "WP": 0,
+                    "BK": 0,
+                    "HBP": 0,
+                    "IBB": 0,
+                    "AB": 24,
+                    "BF": 25,
+                    "FO": 6,
+                    "GO": 4,
+                    "NP": "--"
+                },
+                {
+                    "Player": "Polzien",
+                    "IP": 0.2,
+                    "H": 2,
+                    "R": 1,
+                    "ER": 1,
+                    "BB": 2,
+                    "SO": 0,
+                    "WP": 1,
+                    "BK": 0,
+                    "HBP": 0,
+                    "IBB": 0,
+                    "AB": 4,
+                    "BF": 6,
+                    "FO": 0,
+                    "GO": 2,
+                    "NP": "--"
+                },
+                {
+                    "Player": "Harris (W, 1-0)",
+                    "IP": 2.1,
+                    "H": 0,
+                    "R": 0,
+                    "ER": 0,
+                    "BB": 0,
+                    "SO": 4,
+                    "WP": 0,
+                    "BK": 0,
+                    "HBP": 1,
+                    "IBB": 0,
+                    "AB": 6,
+                    "BF": 8,
+                    "FO": 1,
+                    "GO": 2,
+                    "NP": "--"
+                },
+                {
+                    "Player": "Totals",
+                    "IP": -1.0,
+                    "H": 8,
+                    "R": 2,
+                    "ER": 2,
+                    "BB": 3,
+                    "SO": 11,
+                    "WP": 1,
+                    "BK": 0,
+                    "HBP": 1,
+                    "IBB": 0,
+                    "AB": 34,
+                    "BF": 39,
+                    "FO": 7,
+                    "GO": 8,
+                    "NP": -1
+                }
+            ]
+        }
+    }
+}

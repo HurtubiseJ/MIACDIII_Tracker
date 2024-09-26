@@ -5,7 +5,7 @@ import json
 from datetime import datetime 
 import pandas as pd
 
-URL = "https://miacathletics.com/boxscore.aspx?id=7ltyipP022aUJKmSgYVs3wXi7up73ghniwD5ElWyd07J7BNseBaMQePf0fY%2f3yUPGBOMQ6HzAX3wcEsySnJXko%2bkFOoKQSSLBvhfpeT0ohBQdoC2HNEJUUesGkojIIgiZkhCjY0oOJdfJAONgjhmArcWEHU7ce2nyu2T%2bM%2f8lU7kEfD%2f%2f9ZmPM1hfHeK2jhw&path=baseball"
+URL = "https://miacathletics.com/boxscore.aspx?id=7ltyipP022aUJKmSgYVs3wXi7up73ghniwD5ElWyd07J7BNseBaMQePf0fY%2f3yUPU2iqzJuGrvibprNxltHfhjzahKugRChgIwJOnQuU36aPr6UCGn53aYCKiFnmHaPs9JDhc3iAafJNN0wdhpG5rEfXVis2ofyXQVlRHTsQbyA%3d&path=baseball"
 
 #TODO: Maybe Remove
 import warnings
@@ -93,7 +93,7 @@ def get_pitcher_tables(box_tables):
     return {"Team 1 Pitching": df1.to_dict('records'), "Team 2 Pitching": df2.to_dict("records")}
 
 def write_json(_json):
-    with open("C:\\Users\\jhurt\\OneDrive\\Desktop\\MIACDIII_Tracker\\logs\\Game_stats.json", "a") as file:
+    with open("C:\\Users\\jhurt\\OneDrive\\Desktop\\MIACDIII_Tracker\\logs\\Game_Box.json", "a") as file:
         file.write(json.dumps(_json, indent=4) + '\n')
 
 #Function goes to the Box Score section of the given url and parses the given stats
@@ -105,7 +105,7 @@ def parse_and_store_box(URL):
     try: 
         print(f"Processing URL: {URL}")
         soup = get_page(URL)
-        _json = get_all_box_stats_json(soup)
+        _json = get_all_box_stats_json(soup, URL)
         write_json(_json)
         write_URL_to_logs(URL, True)
     except:
@@ -125,7 +125,7 @@ def write_URL_to_logs(URL, isUpdated):
                 file.write(json.dumps(_json_element, indent=4) + '\n')
                 
 
-def get_all_box_stats_json(soup):
+def get_all_box_stats_json(soup, URL):
     header = get_box_score_header(soup)
     box_tables = get_all_box_tables(soup)
     _json_batters = get_batter_tables(box_tables)
@@ -134,6 +134,7 @@ def get_all_box_stats_json(soup):
     _json_box_details = get_header_details(header)
     _json_game = {
         "Game Stats":{
+            "URL": URL,
             "Game Details":_json_box_details, 
             "Game Totals":_json_team_box_totals,
             "Batters":_json_batters, 
@@ -142,7 +143,8 @@ def get_all_box_stats_json(soup):
     }
     return _json_game
 
-# def parse_and_store_play(URL):
+####End Box Score Parse ####
+####Start of Play by play ####
 
     
 
