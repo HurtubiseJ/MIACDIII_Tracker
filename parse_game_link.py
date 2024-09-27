@@ -13,7 +13,6 @@ import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 warnings.simplefilter(action='ignore', category=DeprecationWarning)
 
-
 #Opens specified link and return etree html object
 def get_page(URL):  
     try:
@@ -187,9 +186,6 @@ def get_all_box_stats_json(soup, URL):
         }
     }
     return _json_game
-
-####End Box Score Parse ####
-####Start of Play by play ####
 
 def parse_and_store_PBP(soup, URL):
     try:
