@@ -1,4 +1,0 @@
-GET Method: https://miacathletics.com/boxscore.aspx?id=7ltyipP022aUJKmSgYVs3wXi7up73ghniwD5ElWyd07J7BNseBaMQePf0fY%2F3yUPGBOMQ6HzAX3wcEsySnJXko%2BkFOoKQSSLBvhfpeT0ohBQdoC2HNEJUUesGkojIIgixwE6SUAJI50Ta7DfWrZEcGjckU9agWicoCIBcPWwlwA%3D&path=baseball\
-
-
-https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?product=hourly_height&application=NOS.COOPS.TAC.WL&begin_date=20230101&end_date=20240101&datum=IGLD&station=9075002&time_zone=LST&units=english&format=json

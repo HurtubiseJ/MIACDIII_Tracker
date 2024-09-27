@@ -5,6 +5,7 @@ import json
 from datetime import datetime 
 import pandas as pd
 from parse_game_link import format_error_json
+import os
 
 GAME_LINKS_URL = "https://miacathletics.com/stats.aspx?path=baseball&year=2023"
 
@@ -15,7 +16,12 @@ def get_page(URL):
     except requests.exceptions.RequestException as e:
         print(f"Error Processing URL: {URL}")
         _json = format_error_json("URL get", datetime.now(), URL, e)
-        with open("C:\\Users\\jhurt\\OneDrive\\Desktop\\MIACDIII_Tracker\\logs\\Error_logs.json", "a") as file:
+        if not os.path.exists("C:\\Users\\jhurt\\OneDrive\\Desktop\\MIAC_INFO\\Error_logs\\Error_logs.json"):
+            with open("C:\\Users\\jhurt\\OneDrive\\Desktop\\MIAC_INFO\\Error_logs\\Error_logs.json", "w+") as f:
+                pass
+        with open("C:\\Users\\jhurt\\OneDrive\\Desktop\\MIAC_INFO\\Error_logs\\Error_logs.json", "r+") as file:
+            curr_errors = json.load(file)
+            curr_errors
             file.write(json.dumps(_json, indent=4))
 
 
@@ -30,23 +36,31 @@ def save_team_table_links(teams, tables):
         dates = []
         opponents = []
         results = []
+        ids = []
         for tr in table.find_all("tr"):
             rows = tr.find_all("td")
             if rows:
                 dates.append(rows[0].text)
                 opponents.append(rows[1].text.strip().strip("* ").strip("at "))
                 results.append(rows[2].text)
-                links.append("https://miacathletics.com/" + rows[2].find("a")["href"])
-        team_json = save_team_table_links_helper(team_name, team_record, links, dates, opponents, results)
+                link = rows[2].find("a")['href']
+                links.append("https://miacathletics.com/" + link)
+                id = link.split('id=')[1].split("%3d&path")[0]
+                ids.append(id)
+
+        team_json = save_team_table_links_helper(team_name, team_record, links, dates, opponents, results, ids)
         all_matches.append(team_json)
     full_json = {
         "All Games": all_matches
     }
-    with open("C:\\Users\\jhurt\\OneDrive\\Desktop\\MIACDIII_Tracker\\logs\\Game_links.json", "a") as file:
+    if not os.path.exists("C:\\Users\\jhurt\\OneDrive\\Desktop\\MIAC_INFO\\MASTER_GAME_LINKS\\Game_links.json"):
+            with open("C:\\Users\\jhurt\\OneDrive\\Desktop\\MIAC_INFO\\MASTER_GAME_LINKS\\Game_links.json", "w+") as f:
+                pass
+    with open("C:\\Users\\jhurt\\OneDrive\\Desktop\\MIAC_INFO\\MASTER_GAME_LINKS\\Game_links.json", "r+") as file:
         file.write(json.dumps(full_json, indent=4))
 
-def save_team_table_links_helper(name, record, links, dates, opponents, results):
-    matches_list = create_matches_json(links, dates, opponents, results)
+def save_team_table_links_helper(name, record, links, dates, opponents, results, ids):
+    matches_list = create_matches_json(links, dates, opponents, results, ids)
     _json = {
         "Team":name,
         "Record": record,
@@ -54,14 +68,15 @@ def save_team_table_links_helper(name, record, links, dates, opponents, results)
     }
     return _json
     
-def create_matches_json(links, dates, opponents, results):
+def create_matches_json(links, dates, opponents, results, ids):
     matches_list = []
     for i in range(len(links)):
         match = {
             "Opponent": f"{opponents[i]}",
             "Date": f"{dates[i]}", 
             "Resuilt": f"{results[i]}", 
-            "URL": f"{links[i]}" 
+            "URL": f"{links[i]}",
+            "Id": f"{ids[i]}"
         }
         matches_list.append(match)
     return matches_list

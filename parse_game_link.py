@@ -4,12 +4,15 @@ import re
 import json
 from datetime import datetime 
 import pandas as pd
+import os
 
 URL = "https://miacathletics.com/boxscore.aspx?id=7ltyipP022aUJKmSgYVs3wXi7up73ghniwD5ElWyd07J7BNseBaMQePf0fY%2f3yUPU2iqzJuGrvibprNxltHfhjzahKugRChgIwJOnQuU36aPr6UCGn53aYCKiFnmHaPs9JDhc3iAafJNN0wdhpG5rEfXVis2ofyXQVlRHTsQbyA%3d&path=baseball"
 
 #TODO: Maybe Remove
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
+warnings.simplefilter(action='ignore', category=DeprecationWarning)
+
 
 #Opens specified link and return etree html object
 def get_page(URL):  
@@ -19,12 +22,21 @@ def get_page(URL):
         return soup
     except requests.exceptions.RequestException as e:
         print(f"Error Processing URL: {URL}")
-        _json = format_error_json("URL get", datetime.now(), URL, e)
-        with open("C:\\Users\\jhurt\\OneDrive\\Desktop\\MIACDIII_Tracker\\logs\\Error_logs.json", "a") as file:
+        if not os.path.exists("C:\\Users\\jhurt\\OneDrive\\Desktop\\MIACDIII_Tracker\\logs\\Error_logs.json"):
+            with open("C:\\Users\\jhurt\\OneDrive\\Desktop\\MIACDIII_Tracker\\logs\\Error_logs.json", "w+") as f:
+                pass
+        with open("C:\\Users\\jhurt\\OneDrive\\Desktop\\MIACDIII_Tracker\\logs\\Error_logs.json", "r+") as file:
+            full_errors = json.load(file)
+            _json = {}
+            if full_errors == None: 
+                _json = {"Errors": [{"date":f"{datetime.now()}", "URL":f"{URL}", "ErrorCode":f"{e}"}]}
+            else:
+                _json = format_error_json(full_errors, "URL get", datetime.now(), URL, e)
             file.write(json.dumps(_json, indent=4))
 
-def format_error_json(date, URL, errorCode):
-    return {"date":f"{date}", "URL":f"{URL}", "ErrorCode":f"{errorCode}"}
+def format_error_json(full_list, date, URL, errorCode):
+    full_list['Errors'].append({"date":f"{date}", "URL":f"{URL}", "ErrorCode":f"{errorCode}"})
+    return full_list
 
 def get_box_score_section(soup):
     return soup.find('section', id='box-score')
@@ -92,39 +104,72 @@ def get_pitcher_tables(box_tables):
     df2 = pd.read_html(table2.prettify())[0].fillna(-1)
     return {"Team 1 Pitching": df1.to_dict('records'), "Team 2 Pitching": df2.to_dict("records")}
 
-def write_json(_json):
-    with open("C:\\Users\\jhurt\\OneDrive\\Desktop\\MIACDIII_Tracker\\logs\\Game_Box.json", "a") as file:
+def write_json(_json, URL):
+    id = URL.split('id=')[1].split("%3d&path")[0]
+
+    if not os.path.exists(f"C:\\Users\\jhurt\\OneDrive\\Desktop\\MIAC_INFO\\GAMES\\{id}"):
+        os.mkdir(f"C:\\Users\\jhurt\\OneDrive\\Desktop\\MIAC_INFO\\GAMES\\{id}")
+    with open(f"C:\\Users\\jhurt\\OneDrive\\Desktop\\MIAC_INFO\\GAMES\\{id}\\Game_Box.json", "w+") as file:
         file.write(json.dumps(_json, indent=4) + '\n')
 
 #Function goes to the Box Score section of the given url and parses the given stats
-#Game Details
-#Game Totals
-#Batters
-#Pitchers
-def parse_and_store_box(URL):
+def parse_and_store_box(soup, URL):
     try: 
+        print(f"Processing Box scores for URL: {URL}")
+        _json = get_all_box_stats_json(soup, URL)
+        write_json(_json, URL)
+        write_URL_to_logs_box(URL, True)
+    except:
+        print(f"Failed to parse box scores URL: {URL}")
+        write_URL_to_logs_box(URL, False)
+
+def parse_all(URL):
         print(f"Processing URL: {URL}")
         soup = get_page(URL)
-        _json = get_all_box_stats_json(soup, URL)
-        write_json(_json)
-        write_URL_to_logs(URL, True)
-    except:
-        print(f"Failed to parse URL: {URL}")
-        write_URL_to_logs(URL, False)
+        #Box Section
+        parse_and_store_box(soup, URL)
+        #play by play section
+        parse_and_store_PBP(soup, URL)
+        print(f'Finished Processing URL: {URL}')
 
-def write_URL_to_logs(URL, isUpdated):
-    with open("C:\\Users\\jhurt\\OneDrive\\Desktop\\MIACDIII_Tracker\\logs\\update_logs.json", "r+") as file:
+def write_URL_to_logs_box(URL, isUpdated):
+    if not os.path.exists("C:\\Users\\jhurt\\OneDrive\\Desktop\\MIAC_INFO\\update_logs\\update_logs.json"):
+        with open("C:\\Users\\jhurt\\OneDrive\\Desktop\\MIAC_INFO\\update_logs\\update_logs.json", "w+") as f:
+            pass
+    with open("C:\\Users\\jhurt\\OneDrive\\Desktop\\MIAC_INFO\\update_logs\\update_logs.json", "r+") as file:
             try:
-                _json = json.load(file)
-                for game in _json:
-                    if game['URL'] == URL:
-                        _json['URL']["lastUpdated"] = datetime.now()
-                        _json['URL']["isUpdated"] = isUpdated
+                _json = ""
+                try:
+                    _json = json.load(file)
+                    for game in _json['Logs']:
+                        if game['URL'] == URL:
+                            _json['URL']["lastUpdated"] = datetime.now()
+                            _json['URL']["BoxisUpdated"] = isUpdated
+                except:
+                    _json = {"Logs": [{"URL": URL, "lastUpdated": str(datetime.now()), "BoxisUpdated": isUpdated, "PBPisUpdated": False}]}
+                file.write(json.dumps(_json, indent=4))
             except: 
-                _json_element = {"URL": URL, "lastUpdated": str(datetime.now()), "isUpdated": isUpdated}
-                file.write(json.dumps(_json_element, indent=4) + '\n')
-                
+                print(f"Failed to modify update Box log for: {URL}")
 
+def write_URL_to_logs_PBP(URL, isUpdated):
+    if not os.path.exists("C:\\Users\\jhurt\\OneDrive\\Desktop\\MIAC_INFO\\update_logs\\update_logs.json"):
+        with open("C:\\Users\\jhurt\\OneDrive\\Desktop\\MIAC_INFO\\update_logs\\update_logs.json", "w+") as f:
+            pass
+    with open("C:\\Users\\jhurt\\OneDrive\\Desktop\\MIAC_INFO\\update_logs\\update_logs.json", "r+") as file:
+            try:
+                _json = ''
+                try:
+                    _json = json.load(file)
+                    for game in _json['Logs']:
+                        if game['URL'] == URL:
+                            _json['URL']["lastUpdated"] = datetime.now()
+                            _json['URL']["PBPisUpdated"] = isUpdated
+                except:
+                    _json = {"Logs": [{"URL": URL, "lastUpdated": str(datetime.now()), "BoxisUpdated": False, "PBPisUpdated": isUpdated}]}
+                file.write(json.dumps(_json, indent=4))
+            except: 
+                print(f"Failed to modify update PBP log for: {URL}")
+                
 def get_all_box_stats_json(soup, URL):
     header = get_box_score_header(soup)
     box_tables = get_all_box_tables(soup)
@@ -146,13 +191,60 @@ def get_all_box_stats_json(soup, URL):
 ####End Box Score Parse ####
 ####Start of Play by play ####
 
-    
+def parse_and_store_PBP(soup, URL):
+    try:
+        tables = get_all_play_tables(soup)
+        outcomes = []
+        for i in range(len(tables)):
+            inning_outcome = []
+            for th in tables[i].find_all("th"):
+                if th.text == 'Play Description':
+                    continue 
+                inning_outcome.append(th.text)
+            outcomes.append(inning_outcome)
+        game_descriptions_dict = parse_outcomes(outcomes, URL)
+        id = URL.split('id=')[1].split("%3d&path")[0]
+        if not os.path.exists(f"C:\\Users\\jhurt\\OneDrive\\Desktop\\MIAC_INFO\\GAMES\\{id}"):
+            os.mkdir(f"C:\\Users\\jhurt\\OneDrive\\Desktop\\MIAC_INFO\\GAMES\\{id}")
+        with open(f"C:\\Users\\jhurt\\OneDrive\\Desktop\\MIAC_INFO\\GAMES\\{id}\\Game_PBP.json", 'w+') as file:
+            file.write(json.dumps(game_descriptions_dict, indent=4))
+    except:
+        write_URL_to_logs_PBP(URL, False)
+
+
+#Output Json object {name, hittype, hit location}
+name_regex = r".?\.?\s?[A-Za-z]+" #USE SEARCH 
+hittype_regex = r'\b(?:doubled|singled|tripled|flied|popped up|lined out|grounded out|grounded into double play|walked|struck out|homered|hit by pitch|bunt|sacrifice fly|sacrifice bunt|intentionally walked|hit a home run|up the middle)\b'
+hitlocation_regex = r'\b(?:cf|rf|lf|1b|2b|3b|ss|c|p|to p|center field|right field|left field|first base|second base|third base|shortstop|catcher|pitcher|center|third|first|second)\b'
+abrivs = {"to p": 1, "p": 1, "c": 2, "1b": 3, "2b": 4, "3b": 5, "ss": 6, "lf": 7, "cf": 8, "rf": 9, "pitcher": 1, "catcher": 2, "first base": 3, "second base": 4, "third base": 5, "shortstop": 6, "left field": 7, "center field": 8, "right field": 9, "center": 10, "third": 11, "first": 12, "second": 13}
+
+def parse_outcomes(outcomes, URL):
+    game_outcomes = []
+    missed_lines = []
+    for i in range(len(outcomes)):
+        inning = []
+        for j in range(len(outcomes[i])):
+            name = re.search(name_regex, outcomes[i][j])
+            hit_type = re.search(hittype_regex, outcomes[i][j])
+            hitlocation = re.search(hitlocation_regex, outcomes[i][j])
+            if name != None and hitlocation != None:
+                inning.append({"Name" : name.group(), "Hit type": hit_type.group() if hit_type else "N/A" , "Hit location": abrivs[hitlocation.group()]})
+            else:
+                missed_lines.append(outcomes[i][j] + '\n')
+        curr_inning = (i // 2) + 1
+        inning_json = {f"inning {curr_inning}": inning}
+        game_outcomes.append(inning_json)
+    if not os.path.exists("C:\\Users\\jhurt\\OneDrive\\Desktop\\MIAC_INFO\\Error_logs\\missed_PBP_lines.txt"):
+        with open("C:\\Users\\jhurt\\OneDrive\\Desktop\\MIAC_INFO\\Error_logs\\missed_PBP_lines.txt", "w+") as f:
+            pass
+    with open("C:\\Users\\jhurt\\OneDrive\\Desktop\\MIAC_INFO\\Error_logs\\missed_PBP_lines.txt", "r+") as file:
+        for line in missed_lines:
+            file.write(line)
+    outcomes_dict = {"URL": URL, "Game Details" : game_outcomes}
+    return outcomes_dict
 
 def main():
-    parse_and_store_box(URL)
-
-#To get team box stats json call get_box_score_header(soup)
-#then pass to parse_header()
+    parse_all(URL)
 
 if __name__ == "__main__":
     main()
