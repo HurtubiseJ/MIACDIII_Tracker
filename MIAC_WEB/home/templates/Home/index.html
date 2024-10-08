@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <title>My test page</title>
+  </head>
+  <body>
+        {% if Game_List %}
+        <ul>
+            {% for game in Game_List %}
+                <li><a href="{% url 'detail' game.id %}">{{ game }}</a></li>
+            {% endfor %}
+        </ul>
+        {% else %}
+            <p>No Games are available.</p>
+        {% endif %}
+  </body>
+</html>
